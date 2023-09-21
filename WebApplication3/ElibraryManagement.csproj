@@ -2306,6 +2306,7 @@
     <Content Include="usersignup.aspx" />
     <Content Include="Web.config" />
     <Content Include="Rough1.aspx" />
+    <Content Include="About.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="adminauthormanagement.aspx.cs">
@@ -2400,6 +2401,13 @@
     </Compile>
     <Compile Include="Rough1.aspx.designer.cs">
       <DependentUpon>Rough1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
