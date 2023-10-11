@@ -2294,7 +2294,6 @@
     <Content Include="imgs\home-bg.jpg" />
     <Content Include="imgs\in-homepage-banner.jpg" />
     <Content Include="imgs\library.png" />
-    <Content Include="mongocrypt.dll" />
     <Content Include="publisher.aspx" />
     <Content Include="imgs\publisher.png" />
     <Content Include="imgs\search-online.png" />
@@ -2464,8 +2463,6 @@
     <Content Include="fontawesome\webfonts\fa-solid-900.woff2" />
     <Content Include="fontawesome\webfonts\fa-v4compatibility.ttf" />
     <Content Include="fontawesome\webfonts\fa-v4compatibility.woff2" />
-    <Content Include="libmongocrypt.so" />
-    <Content Include="libmongocrypt.dylib" />
     <None Include="packages.config" />
     <Content Include="Site1.Master" />
     <None Include="Web.Debug.config">
