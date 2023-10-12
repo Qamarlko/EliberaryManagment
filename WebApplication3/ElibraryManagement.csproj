@@ -2299,12 +2299,9 @@
     <Content Include="imgs\search-online.png" />
     <Content Include="imgs\sign-up.png" />
     <Content Include="imgs\writer.png" />
-    <Content Include="testpagewithMasterPage.aspx" />
-    <Content Include="TestWithOutMasterPage.aspx" />
     <Content Include="userlogin.aspx" />
     <Content Include="usersignup.aspx" />
     <Content Include="Web.config" />
-    <Content Include="Rough1.aspx" />
     <Content Include="About.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -2366,20 +2363,6 @@
       <DependentUpon>Site1.Master</DependentUpon>
     </Compile>
     <Compile Include="sqlConnection.cs" />
-    <Compile Include="testpagewithMasterPage.aspx.cs">
-      <DependentUpon>testpagewithMasterPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="testpagewithMasterPage.aspx.designer.cs">
-      <DependentUpon>testpagewithMasterPage.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="TestWithOutMasterPage.aspx.cs">
-      <DependentUpon>TestWithOutMasterPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TestWithOutMasterPage.aspx.designer.cs">
-      <DependentUpon>TestWithOutMasterPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="userlogin.aspx.cs">
       <DependentUpon>userlogin.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2393,13 +2376,6 @@
     </Compile>
     <Compile Include="usersignup.aspx.designer.cs">
       <DependentUpon>usersignup.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Rough1.aspx.cs">
-      <DependentUpon>Rough1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Rough1.aspx.designer.cs">
-      <DependentUpon>Rough1.aspx</DependentUpon>
     </Compile>
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
