@@ -37,7 +37,7 @@ namespace WebApplication3
                 }
                 Response.Write("<script>alert('above');</script>");
 
-                SqlCommand cmd = new SqlCommand("select * from admin_table where username='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("select * from admin_login_tbl where username='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
                 SqlDataReader dr = cmd.ExecuteReader();
 
                
@@ -70,7 +70,7 @@ namespace WebApplication3
 
             catch (Exception ex)
             {
-                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                Response.Write("<script>alert('123444 " + ex.Message + "');</script>");
             } 
         }
         }
