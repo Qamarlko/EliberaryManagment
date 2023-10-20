@@ -16,7 +16,7 @@
                         <div class="col">
 
                             <center>
-                                <img width="100" src ="imgs/generaluser.png" />
+                                er<img width="100" src ="imgs/generaluser.png" />
                             </center>
                         </div>
                     </div>
