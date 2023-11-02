@@ -78,7 +78,7 @@ namespace WebApplication3
         {
             Response.Redirect("adminlogin.aspx");
         }
-
+        //LogOutButton
         protected void LinkButton3_Click(object sender, EventArgs e)
         {
 

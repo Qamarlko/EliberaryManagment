@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace WebApplication3
 {
-    public partial class adminlogin : System.Web.UI.Page              
+    public partial class adminlogin : System.Web.UI.Page
     {
 
 
@@ -40,7 +40,7 @@ namespace WebApplication3
                 SqlCommand cmd = new SqlCommand("select * from admin_login_tbl where username='" + TextBox1.Text.Trim() + "' AND password='" + TextBox2.Text.Trim() + "'", con);
                 SqlDataReader dr = cmd.ExecuteReader();
 
-               
+
                 Response.Write("<script>alert('below');</script>");
 
 
@@ -56,7 +56,7 @@ namespace WebApplication3
                         Session["username"] = dr.GetValue(0).ToString();
                         Session["fullname"] = dr.GetValue(2).ToString();
                         Session["role"] = "admin";
-                        //Session["status"] = dr.GetValue(10).ToString();
+                        //Session["status"] = dr.GetValue(10).ToString(); "because admin always active this check is only for *user*"
                     }
                     Response.Redirect("homepage.aspx");
                 }
@@ -71,11 +71,11 @@ namespace WebApplication3
             catch (Exception ex)
             {
                 Response.Write("<script>alert('123444 " + ex.Message + "');</script>");
-            } 
+            }
         }
-        }
-        
     }
+
+}    
         
 
     
