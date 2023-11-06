@@ -101,8 +101,9 @@ namespace WebApplication3
             LinkButton9.Visible = false; // book issuing link button
             LinkButton10.Visible = false; // member management link button
 
+            Response.Redirect("homepage.aspx");// it will redirect to homepage after pressing logout button
 
-            
+
         }
 
         protected void LinkButton7_Click(object sender, EventArgs e)

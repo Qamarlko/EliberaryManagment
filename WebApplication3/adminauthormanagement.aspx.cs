@@ -13,6 +13,9 @@ namespace WebApplication3
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
+
+
         }
 
         //Add Button
@@ -21,8 +24,9 @@ namespace WebApplication3
 
 
             if (CheckIfAutherExists())
-
-                Response.Write("<script>alert('Author with this id also exist. You can not add another Author with same Author ID');</script>");
+            { 
+            Response.Write("<script>alert('Author with this id also exist. You can not add another Author with same Author ID');</script>");
+            }
             else
             {
                 AddNewAuthor();
@@ -33,7 +37,16 @@ namespace WebApplication3
         //Update Button
         protected void Button3_Click(object sender, EventArgs e)
         {
+            if (CheckIfAutherExists())
+            {
+                UpdateAuthor();
 
+            }
+            else
+            {
+
+                Response.Write("<script>alert('Author with this id do not exist. You can not update another Author id without being adding it forst');</script>");
+            }
         }
 
 
@@ -55,28 +68,95 @@ namespace WebApplication3
 
 
 
+
+
+         void UpdateAuthor()
+         {
+             try
+             {
+                 //Response.Write("<script>alert('*2*Database Connection Open by Updateauthor()');</script>");
+
+                 SqlConnection con = new SqlConnection(strcon);
+                 if (con.State == ConnectionState.Closed)
+                 {
+                     con.Open();
+  
+                 }
+                                 
+                 
+                //SqlCommand cmd = new SqlCommand("UPDATE author_master_tbl SET author_name = @author_name WHERE author_id = '" + TextBox2.Text.Trim() + "'", con);
+                SqlCommand cmd = new SqlCommand("UPDATE author_master_tbl SET author_name = @author_name WHERE author_id = @author_id", con);
+
+
+                  cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
+                  cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
+                // cmd.Parameters.AddWithValue("@account_status", "pending"); status only meant for user not admin and also this field is not avaialable in author mangemant table 
+                try
+                 {
+                     Response.Write("<script>alert('*4*Entered in Try Box');</script>");
+                     int rowsAffected = cmd.ExecuteNonQuery();
+
+                     Response.Write($"Rows affected: {rowsAffected}");
+                 }
+                 catch (Exception ex)
+                 {
+                     Console.WriteLine($"Error: {ex.Message}");
+
+                 }
+
+
+                //cmd.ExecuteNonQuery(); freeze here because executed same command in line 98 with storing its boolen response in "int rowsAffected"                     Response.Write($"con value: {con}");
+
+                con.Close();
+                 Response.Write("<script>alert('Sign Up Successful & SQL connection closed . Go to User Login to Login');</script>");
+             }
+             catch (Exception ex)
+             {
+                 Response.Write("<script>alert('" + ex.Message + "');</script>");
+             }
+
+
+         }
+
+
+         
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         void AddNewAuthor()
         {
-            Response.Write("<script>alert('Entered in signup member function');</script>");
-            try
+             try
             {
-                Response.Write("<script>alert('Database Connection Open by signUpNewMember()');</script>");
-                SqlConnection con = new SqlConnection(strcon);
+                 SqlConnection con = new SqlConnection(strcon);
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
-                    Response.Write("<script>alert('connection was closed now opened by signupfunction');</script>");
+                    Response.Write("<script>alert('*3*connection was closed now opened by signupfunction');</script>");
 
                 }
                 SqlCommand cmd = new SqlCommand("INSERT INTO author_master_tbl(author_id,author_name) values(@author_id,@author_name)", con);
                 cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
                 cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
                  
-               // cmd.Parameters.AddWithValue("@account_status", "pending");
+               // cmd.Parameters.AddWithValue("@account_status", "pending"); status only meant for user not admin and also this field is not avaialable in author mangemant table 
                 try
                 {
-                    Response.Write("<script>alert('Entered in Try Box');</script>");
-                    int rowsAffected = cmd.ExecuteNonQuery();
+                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     Response.Write($"Rows affected: {rowsAffected}");
                 }
@@ -87,7 +167,7 @@ namespace WebApplication3
                 }
 
 
-                //cmd.ExecuteNonQuery();
+                //cmd.ExecuteNonQuery(); freeze here because executed same command in line 79 with storing its boolen response in "int rowsAffected"
                 con.Close();
                 Response.Write("<script>alert('Sign Up Successful & SQL connection closed . Go to User Login to Login');</script>");
             }
@@ -99,6 +179,8 @@ namespace WebApplication3
 
 
         }
+
+        
         bool CheckIfAutherExists()
         {
             try
