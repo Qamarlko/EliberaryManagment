@@ -24,8 +24,8 @@ namespace WebApplication3
 
 
             if (CheckIfAutherExists())
-            { 
-            Response.Write("<script>alert('Author with this id also exist. You can not add another Author with same Author ID');</script>");
+            {
+                Response.Write("<script>alert('Author with this id also exist. You can not add another Author with same Author ID');</script>");
             }
             else
             {
@@ -53,6 +53,18 @@ namespace WebApplication3
         //Delete Button
         protected void Button5_Click(object sender, EventArgs e)
         {
+            if (CheckIfAutherExists())
+            {
+                DeleteAuthor();
+                /*****************************************************************************************************/
+
+
+            }
+            else
+            {
+
+                Response.Write("<script>alert('Author with this id do not exist. You can not Delete  Author id without being adding it forst');</script>");
+            }
 
         }
 
@@ -70,58 +82,54 @@ namespace WebApplication3
 
 
 
-         void UpdateAuthor()
-         {
-             try
-             {
-                 //Response.Write("<script>alert('*2*Database Connection Open by Updateauthor()');</script>");
+        void UpdateAuthor()
+        {
+            try
+            {
+                //Response.Write("<script>alert('*2*Database Connection Open by Updateauthor()');</script>");
 
-                 SqlConnection con = new SqlConnection(strcon);
-                 if (con.State == ConnectionState.Closed)
-                 {
-                     con.Open();
-  
-                 }
-                                 
-                 
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                }
+
+
                 //SqlCommand cmd = new SqlCommand("UPDATE author_master_tbl SET author_name = @author_name WHERE author_id = '" + TextBox2.Text.Trim() + "'", con);
                 SqlCommand cmd = new SqlCommand("UPDATE author_master_tbl SET author_name = @author_name WHERE author_id = @author_id", con);
 
 
-                  cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
-                  cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
+                cmd.Parameters.AddWithValue("@author_name", TextBox2.Text.Trim());
+                cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
                 // cmd.Parameters.AddWithValue("@account_status", "pending"); status only meant for user not admin and also this field is not avaialable in author mangemant table 
                 try
-                 {
-                     Response.Write("<script>alert('*4*Entered in Try Box');</script>");
-                     int rowsAffected = cmd.ExecuteNonQuery();
+                {
+                    //Response.Write("<script>alert('*4*Entered in Try Box');</script>");
+                    int rowsAffected = cmd.ExecuteNonQuery();
 
-                     Response.Write($"Rows affected: {rowsAffected}");
-                 }
-                 catch (Exception ex)
-                 {
-                     Console.WriteLine($"Error: {ex.Message}");
+                    Response.Write($"Rows affected: {rowsAffected}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
 
-                 }
+                }
 
 
                 //cmd.ExecuteNonQuery(); freeze here because executed same command in line 98 with storing its boolen response in "int rowsAffected"                     Response.Write($"con value: {con}");
 
                 con.Close();
-                 Response.Write("<script>alert('Sign Up Successful & SQL connection closed . Go to User Login to Login');</script>");
-             }
-             catch (Exception ex)
-             {
-                 Response.Write("<script>alert('" + ex.Message + "');</script>");
-             }
+                Response.Write("<script>alert('Update Author Successful & SQL connection closed . Go to User Login to Login');</script>");
+                clearform();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
 
 
-         }
-
-
-         
-
-        
+        }
 
 
 
@@ -131,6 +139,58 @@ namespace WebApplication3
 
 
 
+
+
+
+
+
+        void DeleteAuthor()
+        {
+            try
+            {
+                 
+
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+
+                }
+
+ /*********************************************************************************************************************************************************************/
+                 SqlCommand cmd = new SqlCommand("Delete from  author_master_tbl  WHERE author_id = @author_id", con);
+
+
+                
+                cmd.Parameters.AddWithValue("@author_id", TextBox1.Text.Trim());
+                 
+                // cmd.Parameters.AddWithValue("@account_status", "pending"); status only meant for user not admin and also this field is not avaialable in author mangemant table 
+                try
+                {
+                    //Response.Write("<script>alert('*4*Entered in Try Box');</script>");
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    Response.Write($"Rows affected: {rowsAffected}");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+
+                }
+
+
+                //cmd.ExecuteNonQuery(); freeze here because executed same command in line 98 with storing its boolen response in "int rowsAffected"                     Response.Write($"con value: {con}");
+
+                con.Close();
+                Response.Write("<script>alert('Delete Successful & SQL connection closed . Go to User Login to Login');</script>");
+                clearform();
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
+
+        }
 
 
 
@@ -170,6 +230,7 @@ namespace WebApplication3
                 //cmd.ExecuteNonQuery(); freeze here because executed same command in line 79 with storing its boolen response in "int rowsAffected"
                 con.Close();
                 Response.Write("<script>alert('Sign Up Successful & SQL connection closed . Go to User Login to Login');</script>");
+                clearform();
             }
             catch (Exception ex)
             {
@@ -215,5 +276,12 @@ namespace WebApplication3
             }
 
         }
+        void clearform()
+        {
+            TextBox1.Text = "";
+            TextBox2.Text = "";
+        }
+
+
     }
 }

@@ -11,7 +11,7 @@ namespace WebApplication3
                 if (Session["role"] == null || Session["role"].ToString() == "")
 
                 {
-                    Response.Write("<script>alert('Enter in Master page null Session');</script>");
+                   // Response.Write("<script>alert('Enter in Master page null Session');</script>");
 
                     LinkButton1.Visible = true; // user login link button
                     LinkButton2.Visible = true; // sign up link button
