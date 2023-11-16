@@ -9,14 +9,15 @@
 
     <%-- bootstrap css --%>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+     <%--fontawesome css--%>
+    <link href="fontawesome/css/all.css" rel="stylesheet" />
     <%-- datatables css --%>
     <link href="datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <%--fontawesome css--%>
-    <link href="fontawesome/css/all.css" rel="stylesheet" />
-        <%--My css--%>
+   
+    <%--My css--%>
 
     <link href="css/customstylesheet.css" rel="stylesheet" /> 
-
+    
     <%--jquery--%>
     <script src="bootstrap/js/jquery-3.3.1.slim.min.js"></script>
     <%--popper.js--%>
@@ -24,10 +25,13 @@
     <%--bootstrap.js--%>
    <script src="bootstrap/js/bootstrap.min.js"></script> 
 
-     
-
+    <%--datatables.js--%>
+    
+    <script src="datatables/js/jquery.dataTables.min.js"></script>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
+         
+   
     </asp:ContentPlaceHolder>
 </head>
 <body>

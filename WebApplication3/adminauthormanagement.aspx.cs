@@ -56,7 +56,7 @@ namespace WebApplication3
             if (CheckIfAutherExists())
             {
                 DeleteAuthor();
-                /*****************************************************************************************************/
+                
 
 
             }
@@ -72,14 +72,48 @@ namespace WebApplication3
         //Go Button
         protected void Button2_Click(object sender, EventArgs e)
         {
-
+            getAuthorByID();
         }
 
 
         // user defined method
 
 
+        void getAuthorByID()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                    //Response.Write("<script>alert('Database Connection Open by Running Code');</script>");
 
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT * from author_master_tbl where author_id='" + TextBox1.Text.Trim() + "';", con);
+
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count >= 1)
+                {
+                    TextBox2.Text = dt.Rows[0][1].ToString();
+                }
+                else
+                {
+                    Response.Write("<script>alert('InvalidAuthorID');</script>");
+                }
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                //return false;
+            }
+
+
+        }
 
 
         void UpdateAuthor()
@@ -122,6 +156,7 @@ namespace WebApplication3
                 con.Close();
                 Response.Write("<script>alert('Update Author Successful & SQL connection closed . Go to User Login to Login');</script>");
                 clearform();
+                GridView2.DataBind();/*it will create live update from database to gridview*/
             }
             catch (Exception ex)
             {
@@ -182,8 +217,10 @@ namespace WebApplication3
                 //cmd.ExecuteNonQuery(); freeze here because executed same command in line 98 with storing its boolen response in "int rowsAffected"                     Response.Write($"con value: {con}");
 
                 con.Close();
-                Response.Write("<script>alert('Delete Successful & SQL connection closed . Go to User Login to Login');</script>");
+                //Response.Write("<script>alert('Delete Successful & SQL connection closed . Go to User Login to Login');</script>");
                 clearform();
+                GridView2.DataBind();/*it will create live update from database to gridview*/
+
             }
             catch (Exception ex)
             {
@@ -206,7 +243,7 @@ namespace WebApplication3
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
-                    Response.Write("<script>alert('*3*connection was closed now opened by signupfunction');</script>");
+                  //.  Response.Write("<script>alert('*3*connection was closed now opened by signupfunction');</script>");
 
                 }
                 SqlCommand cmd = new SqlCommand("INSERT INTO author_master_tbl(author_id,author_name) values(@author_id,@author_name)", con);
@@ -231,6 +268,8 @@ namespace WebApplication3
                 con.Close();
                 Response.Write("<script>alert('Sign Up Successful & SQL connection closed . Go to User Login to Login');</script>");
                 clearform();
+                GridView2.DataBind();/*it will create live update from database to gridview*/
+
             }
             catch (Exception ex)
             {
@@ -250,7 +289,7 @@ namespace WebApplication3
                 if (con.State == ConnectionState.Closed)
                 {
                     con.Open();
-                    Response.Write("<script>alert('Database Connection Open by Running Code');</script>");
+                    //Response.Write("<script>alert('Database Connection Open by Running Code');</script>");
 
                 }
 
