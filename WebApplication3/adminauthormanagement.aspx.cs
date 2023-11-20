@@ -75,9 +75,7 @@ namespace WebApplication3
             getAuthorByID();
         }
 
-
         // user defined method
-
 
         void getAuthorByID()
         {
@@ -114,8 +112,6 @@ namespace WebApplication3
 
 
         }
-
-
         void UpdateAuthor()
         {
             try
@@ -165,20 +161,6 @@ namespace WebApplication3
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         void DeleteAuthor()
         {
             try
@@ -192,7 +174,7 @@ namespace WebApplication3
 
                 }
 
- /*********************************************************************************************************************************************************************/
+  
                  SqlCommand cmd = new SqlCommand("Delete from  author_master_tbl  WHERE author_id = @author_id", con);
 
 
@@ -214,7 +196,8 @@ namespace WebApplication3
                 }
 
 
-                //cmd.ExecuteNonQuery(); freeze here because executed same command in line 98 with storing its boolen response in "int rowsAffected"                     Response.Write($"con value: {con}");
+                //cmd.ExecuteNonQuery(); freeze here because executed same command in line 98 with storing its boolen response in "int rowsAffected"
+                //Response.Write($"con value: {con}");
 
                 con.Close();
                 //Response.Write("<script>alert('Delete Successful & SQL connection closed . Go to User Login to Login');</script>");
@@ -228,13 +211,6 @@ namespace WebApplication3
             }
 
         }
-
-
-
-
-
-
-
         void AddNewAuthor()
         {
              try
@@ -279,8 +255,6 @@ namespace WebApplication3
 
 
         }
-
-        
         bool CheckIfAutherExists()
         {
             try
