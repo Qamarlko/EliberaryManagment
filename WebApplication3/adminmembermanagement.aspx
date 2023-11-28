@@ -1,7 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="adminmembermanagement.aspx.cs" Inherits="WebApplication3.adminmembermanagement" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        /*by adding data table JQuery liberary simple gridview becomes Serch Enable Dynemic Gridview... it targeting the ".table" class*/
+        $(document).ready(function () {
+            $(".table").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable()
+        });
+        
+    </script> 
 </asp:Content>
+ 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
@@ -38,7 +46,7 @@
                                     <%-- Input Group class in BS is used to merge the input text box with Input button  --%>
                                     <div class="input-group">
                                         <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" placeholder="Member ID"></asp:TextBox>
-                                        <asp:LinkButton class="btn btn-primary" ID="LinkButton4" runat="server"><i class="fas fa-check-circle"></i>
+                                        <asp:LinkButton class="btn btn-primary" ID="LinkButton4" runat="server" OnClick="LinkButton4_Click"><i class="fas fa-check-circle"></i>
 
                                         </asp:LinkButton>
 
@@ -60,9 +68,9 @@
                                     <%-- Input Group class in BS is used to merge the input text box with Input button  --%>
                                     <div class="input-group">
                                         <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Account Status" ReadOnly="true"  ></asp:TextBox>
-                                        <asp:LinkButton class="btn btn-success mr-1" ID="LinkButton1" runat="server"><i class="fas fa-check-circle"></i></asp:LinkButton>
-                                        <asp:LinkButton class="btn btn-warning mr-1" ID="LinkButton2" runat="server"><i class="far fa-pause-circle"></i></asp:LinkButton>
-                                        <asp:LinkButton class="btn btn-danger mr-1" ID="LinkButton3" runat="server"><i class="fas fa-times-circle"></i></asp:LinkButton>
+                                        <asp:LinkButton class="btn btn-success mr-1" ID="LinkButton1" runat="server" OnClick="LinkButton1_Click"><i class="fas fa-check-circle"></i></asp:LinkButton>
+                                        <asp:LinkButton class="btn btn-warning mr-1" ID="LinkButton2" runat="server" OnClick="LinkButton2_Click"><i class="far fa-pause-circle"></i></asp:LinkButton>
+                                        <asp:LinkButton class="btn btn-danger mr-1" ID="LinkButton3" runat="server" OnClick="LinkButton3_Click"><i class="fas fa-times-circle"></i></asp:LinkButton>
 
 
                                         <%-- Button and LinkButton are diffrent, Link button used in font awsome case --%>
@@ -126,7 +134,7 @@
                         <%-- btn-block bootstrap class will make button to the full size of parent div otherwiae it will take some margin inside parent div --%>
                         <div class="row">
                             <div class="col-8 mx-auto">
-                                <asp:Button ID="Button4" Class="btn btn-lg btn-block btn-danger" runat="server" Text="Delete User Parmanently" />
+                                <asp:Button ID="Button4" Class="btn btn-lg btn-block btn-danger" runat="server" Text="Delete User Parmanently" OnClick="Button4_Click" />
                              </div>
                         </div> 
                         
@@ -151,7 +159,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h4>Issued Book List</h4>
+                                    <h4>Member List</h4>
                                 </center>
                             </div>
                         </div>
@@ -161,8 +169,18 @@
                             </div>
                         </div>
                         <div class="row">
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:elibraryDBConnectionString %>" SelectCommand="SELECT * FROM [member_master_table]"></asp:SqlDataSource>
                             <div class="col">
-                                <asp:GridView class="table table-striped table-bordered" ID="GridView2" runat="server">
+                                <asp:GridView class="table table-striped table-bordered" ID="GridView2" runat="server" AutoGenerateColumns="False" DataKeyNames="member_id" DataSourceID="SqlDataSource1">
+                                    <Columns>
+                                        <asp:BoundField DataField="member_id" HeaderText="ID" ReadOnly="True" SortExpression="member_id" />
+                                        <asp:BoundField DataField="full_name" HeaderText="Name" SortExpression="full_name" />
+                                        <asp:BoundField DataField="account_status" HeaderText="Account_Status" SortExpression="account_status" />
+                                        <asp:BoundField DataField="contact_no" HeaderText="Contact" SortExpression="contact_no" />
+                                        <asp:BoundField DataField="email" HeaderText="Email ID" SortExpression="email" />
+                                        <asp:BoundField DataField="city" HeaderText="City" SortExpression="city" />
+                                        <asp:BoundField DataField="state" HeaderText="state" SortExpression="state" />
+                                    </Columns>
                                 </asp:GridView>
 
                             </div>
