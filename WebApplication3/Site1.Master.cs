@@ -25,7 +25,7 @@ namespace WebApplication3
                     LinkButton12.Visible = false; // publisher management link button
                     LinkButton8.Visible = false; // book inventory link button
                     LinkButton9.Visible = false; // book issuing link button
-                    LinkButton10.Visible = false; // member management link button
+                //    LinkButton10.Visible = false; // member management link button
 
                 }
                 else if (Session["role"].Equals("user"))
