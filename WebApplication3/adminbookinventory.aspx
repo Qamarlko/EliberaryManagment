@@ -71,12 +71,14 @@
                                 <div class="form-group">
                                     <asp:DropDownList class="form-control" ID="DropDownList3" runat="server">
 
+                                        <asp:ListItem Text="Language" Value="" />
                                         <asp:ListItem Text="English" Value="English" />
                                         <asp:ListItem Text="Hindi" Value="Hindi" />
                                         <asp:ListItem Text="Marathi" Value="Marathi" />
                                         <asp:ListItem Text="French" Value="French" />
                                         <asp:ListItem Text="German" Value="German" />
                                         <asp:ListItem Text="Urdu" Value="Urdu" />
+
                                     </asp:DropDownList>
 
                                 </div>
@@ -85,12 +87,14 @@
                                 <div class="form-group">
                                     <asp:DropDownList class="form-control" ID="DropDownList2" runat="server">
 
+                                        <asp:ListItem Text="Publisher Name" Value="" />
                                         <asp:ListItem Text="Ravi" Value="Ravi" />
                                         <asp:ListItem Text="Shyam" Value="Shyam" />
                                         <asp:ListItem Text="Meera" Value="Meera" />
                                         <asp:ListItem Text="Geeta" Value="Geeta" />
                                         <asp:ListItem Text="Sita" Value="Sita" />
                                         <asp:ListItem Text="Rita" Value="Rita" />
+
                                     </asp:DropDownList>
                                 </div>
 
@@ -100,6 +104,8 @@
                                 <div class="form-group">
                                     <asp:DropDownList class="form-control" ID="DropDownList1" runat="server">
 
+                                                                               
+                                        <asp:ListItem Text="Server" Value="" />
                                         <asp:ListItem Text="Tom" Value="Tom" />
                                         <asp:ListItem Text="Honey" Value="Honey" />
                                         <asp:ListItem Text="Johan" Value="Johan" />
@@ -119,6 +125,7 @@
                                 <label>Genre</label>
                                 <div class="form-group">
                                     <asp:ListBox CssClass="form-control" ID="ListBox1" runat="server" SelectionMode="Multiple" Rows="5" OnSelectedIndexChanged="ListBox1_SelectedIndexChanged">
+                                        <asp:ListItem Text="Genre" Value="" />
                                         <asp:ListItem Text="Action" Value="Action" />
                                         <asp:ListItem Text="Adventure" Value="Adventure" />
                                         <asp:ListItem Text="Comic Book" Value="Comic Book" />
@@ -191,8 +198,6 @@
 
 
 
-
-
                         </div>
 
 
@@ -212,7 +217,7 @@
 
                                 <label>Current Stock</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Current Stock" TextMode="SingleLine" ReadOnly="True"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox11" runat="server"></asp:TextBox>
                                 </div>
                             </div>
 

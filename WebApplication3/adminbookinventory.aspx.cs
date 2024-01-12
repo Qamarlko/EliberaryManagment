@@ -13,10 +13,35 @@ namespace WebApplication3
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                GetBookbyID();
+
+           /* 
+            * if (!IsPostBack)
+             {
+                TextBox1.Text = " ";        //   ........ok
             }
+            else
+            {
+                TextBox1.Text = " ";
+            } 
+           */
+
+            DropDownList1.ClearSelection();
+            DropDownList2.ClearSelection();
+            DropDownList3.ClearSelection();
+            // ListBox1.Items[0].Selected = true;
+            ListBox1.ClearSelection();
+            TextBox4.Text = "";                  // Edition..........ok
+            TextBox5.Text = "";                 //BookCost(PerUnit).....ok
+            TextBox6.Text = "";
+            TextBox7.Text = "";               //Actual Stock........ok
+            TextBox11.Text = "";              //Current Stock........ok
+            TextBox10.Text= "";             //Book Discription....ok
+            TextBox2.Text = "";            //Book Name
+            TextBox3.Text = " ";          //Publish Date
+
+
+           
+
         }
         //Go Button
         protected void LinkButton1_Click(object sender, EventArgs e)
@@ -49,11 +74,9 @@ namespace WebApplication3
 
                     TextBox2.Text = dt.Rows[0]["book_name"].ToString();              //Book Name
                     TextBox3.Text = dt.Rows[0]["publish_date"].ToString();          //Publish Date
-
-
                     ListBox1.ClearSelection();
+
                     string[] genre = dt.Rows[0]["genre"].ToString().Trim().Split(',');
-                    //  Console.WriteLine("Genere = " + genre);
                     for (int i = 0; i < genre.Length; i++)
                     {
                         for (int j = 0; j < ListBox1.Items.Count; j++)
@@ -71,47 +94,49 @@ namespace WebApplication3
                     TextBox6.Text = dt.Rows[0]["no_of_pages"].ToString();          
                     //Pages  not working when text box property was number. later changed to single line worked.
                     TextBox7.Text = dt.Rows[0]["actual_stock"].ToString();           //Actual Stock........ok
-                    TextBox8.Text = dt.Rows[0]["current_stock"].ToString();          //Current Stock........ok
+                    TextBox11.Text = dt.Rows[0]["current_stock"].ToString();          //Current Stock........ok
                     TextBox10.Text = dt.Rows[0]["book_description"].ToString();    //Book Discription....ok
+                    TextBox9.Text = "" + (Convert.ToInt32(dt.Rows[0]["actual_stock"].ToString()) - Convert.ToInt32(dt.Rows[0]["current_stock"].ToString())); //Current Stock....ok
+                    DropDownList3.ClearSelection();
                     DropDownList3.SelectedValue = dt.Rows[0]["language"].ToString(); //Language   
                     DropDownList2.SelectedValue = dt.Rows[0]["publisher_name"].ToString(); //Publisher Name
                     DropDownList1.SelectedValue = dt.Rows[0]["author_name"].ToString(); //Auther Name
 
 
-
-
-
-
-
-
+                    /*Above code not working but suddnly start working
                     //DropDownList3.SelectedValue = dt.Rows[0]["language"].ToString(); //language
+                    //Console.WriteLine("Genere = " + genre);
                     //DropDownList3.ClearSelection();
                     //DropDownList3.SelectedValue = null;
-
-
                     //string name = dt.Rows[0]["language"].ToString();
-                    // DropDownList3.SelectedValue = name;
-
-                    // Response.Write("<script>alert('Language Value = " + name + "');</script>");
-
-
-
-                    //  Response.Write("<script>alert('selected Value = " + DropDownList3.SelectedValue + "');</script>");
+                    //DropDownList3.SelectedValue = name;
+                    //Response.Write("<script>alert('Language Value = " + name + "');</script>");
+                    //Response.Write("<script>alert('selected Value = " + DropDownList3.SelectedValue + "');</script>");
                     //Response.Write("<script>alert('Language Value = " + name + "');</script>");
                     //ListBox1.SelectedValue = dt.Rows[0]["genre"].ToString();      //Auther Name 
                     //TextBoxAuthor.Text = dt.Rows[0]["author_name"].ToString(); //Auther Name
                     //TextBoxPublisher.Text = dt.Rows[0]["publisher_name"].ToString(); //Publisher Name
                     //DropDownList3.Text = dt.Rows[0]["language"].ToString();//Akber Testing
                     //TextBox9.Text = dt.Rows[0]["issued_book"].ToString();          //Issued Book not in database.........................
-
-
-
+                    */
 
                 }
                 else
                 {
-                    Response.Write("<script>alert('InvalidAuthorID');</script>");
-                    /**/
+                    Response.Write("<script>alert('InvalidBookID');</script>");
+                    DropDownList1.ClearSelection();
+                    DropDownList2.ClearSelection();
+                    DropDownList3.ClearSelection();
+                    // ListBox1.Items[0].Selected = true;
+                    ListBox1.ClearSelection();
+                    TextBox4.Text ="";                 // Edition..........ok
+                    TextBox5.Text = "";               //BookCost(PerUnit).....ok
+                    TextBox6.Text = "";
+                    TextBox7.Text = "";             //Actual Stock........ok
+                    TextBox11.Text ="";            //Current Stock........ok
+                    TextBox10.Text = "";          //Book Discription....ok
+                    TextBox1.Text = "";          //Current Stock........ok
+
                 }
             }
             catch (Exception ex)
@@ -127,3 +152,4 @@ namespace WebApplication3
         }
     }
 }
+                    /*                  */
