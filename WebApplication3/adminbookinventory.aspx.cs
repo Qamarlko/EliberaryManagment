@@ -70,7 +70,7 @@ namespace WebApplication3
         }
         protected void Button2_Click(object sender, EventArgs e) //Delete Book
         {
-
+            deleteBookByID();
         }
 
 
@@ -110,6 +110,8 @@ namespace WebApplication3
             
         bool checkIfBookExists()
         {
+            Response.Write("<script>alert('Check book');</script>");
+
             try
             {
                 SqlConnection con = new SqlConnection(strcon);
@@ -125,6 +127,7 @@ namespace WebApplication3
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
+                Response.Write("<script>alert('Check book');</script>");
                 if (dt.Rows.Count >= 1)
                 {
                     return true;
@@ -240,7 +243,11 @@ namespace WebApplication3
  ***The "" + construct is a way to explicitly force the numerical expression to be treated as a string.
          When a string is combined with a non-string value using +, the non-string value is automatically converted to a string.
 The final result of the expression "" + (arithmetic expression) is a string that represents the numerical value of the arithmetic expression.**bard  https://g.co/bard/share/c4d7cc9d42ad   */
+/*Issues still need to be resolved
+ 1.On deleting the book record book id remains on PAGE after deletion..
 
+
+ */
 
 /*
  *** DropDownList3.ClearSelection();
