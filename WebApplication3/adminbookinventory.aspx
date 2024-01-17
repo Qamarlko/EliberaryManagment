@@ -124,7 +124,7 @@
                             <div class="col-md-4">
                                 <label>Genre</label>
                                 <div class="form-group">
-                                    <asp:ListBox CssClass="form-control" ID="ListBox1" runat="server" SelectionMode="Multiple" Rows="5" OnSelectedIndexChanged="ListBox1_SelectedIndexChanged">
+                                    <asp:ListBox CssClass="form-control" ID="ListBox1" runat="server" SelectionMode="Multiple" Rows="5">
                                         <asp:ListItem Text="Genre" Value="" />
                                         <asp:ListItem Text="Action" Value="Action" />
                                         <asp:ListItem Text="Adventure" Value="Adventure" />
@@ -253,15 +253,15 @@
 
                         <div class="row">
                             <div class="col-4">
-                                <asp:Button ID="Button4" class="btn btn-lg btn-block btn-success" runat="server" Text="Add" />
+                                <asp:Button ID="Button4" class="btn btn-lg btn-block btn-success" runat="server" Text="Add" OnClick="Button4_Click" />
                             </div>
 
                             <div class="col-4">
-                                <asp:Button ID="Button1" class="btn btn-lg btn-block btn-warning" runat="server" Text="Update" />
+                                <asp:Button ID="Button1" class="btn btn-lg btn-block btn-warning" runat="server" Text="Update" OnClick="Button1_Click" />
                             </div>
                             <div class="col-4">
 
-                                <asp:Button ID="Button2" class="btn btn-lg btn-block btn-danger" runat="server" Text="Delete" />
+                                <asp:Button ID="Button2" class="btn btn-lg btn-block btn-danger" runat="server" Text="Delete" OnClick="Button2_Click" />
                             </div>
 
                         </div>
@@ -278,7 +278,7 @@
                 <br>
 
                 <div class="row">
-                    <div class="col">
+                    <div class="col-md-7">
                         <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server"></asp:GridView>
                     </div>
                 </div>
