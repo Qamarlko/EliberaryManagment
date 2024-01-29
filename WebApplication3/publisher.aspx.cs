@@ -160,12 +160,6 @@ namespace WebApplication3.imgs
             }
 
 
-
-
-
-
-
-
             void DeletePublisher()
             {
                 try

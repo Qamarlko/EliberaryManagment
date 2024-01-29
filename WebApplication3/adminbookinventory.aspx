@@ -208,7 +208,7 @@
 
                                 <label>Actual Stock</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Actual Stock" TextMode="SingleLine"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Actual Stock">Actual Stock</asp:TextBox>
                                 </div>
                             </div>
 
