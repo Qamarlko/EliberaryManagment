@@ -78,7 +78,7 @@ namespace WebApplication3
 
 
         /*self version with errors*/
-         protected void AddNewBook()
+      /*   protected void AddNewBook()
           {
 
 
@@ -141,10 +141,10 @@ namespace WebApplication3
                   Response.Write("<script>alert('" + ex.Message + "');</script>");
               }
 
-          }
+          }  */
 
          /*ChatGpt version*/
-        /*protected void AddNewBook()
+       protected void AddNewBook()
         {
             try
             {
@@ -189,10 +189,9 @@ namespace WebApplication3
             {
                 Response.Write("<script>alert('" + ex.Message + "');</script>");
             }
-        }*/
+        }
 
-
-        void updateBookByID()
+       void updateBookByID()
         {
             //Response.Write("<script>alert('entered updateBookByID(function) Successfully');</script>");
 
@@ -392,7 +391,6 @@ namespace WebApplication3
                 //return false;
             }
         }
-
 
        void deleteBookByID()
         {
