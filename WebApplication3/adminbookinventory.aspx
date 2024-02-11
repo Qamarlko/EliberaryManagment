@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h4>Book Details</h4>
+                                    <h4>Book Detail</h4>
                                 </center>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                     <asp:DropDownList class="form-control" ID="DropDownList1" runat="server">
 
                                                                                
-                                        <asp:ListItem Text="Server" Value="" />
+                                        <asp:ListItem Text="Author Name" Value="" />
                                         <asp:ListItem Text="Tom" Value="Tom" />
                                         <asp:ListItem Text="Honey" Value="Honey" />
                                         <asp:ListItem Text="Johan" Value="Johan" />
@@ -208,7 +208,7 @@
 
                                 <label>Actual Stock</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Actual Stock">Actual Stock</asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Actual Stock" EnableViewState="false">Actual Stock</asp:TextBox>
                                 </div>
                             </div>
 
