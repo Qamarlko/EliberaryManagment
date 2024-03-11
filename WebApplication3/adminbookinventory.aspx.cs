@@ -28,8 +28,8 @@ namespace WebApplication3
         {
 
 
-            if (!IsPostBack) 
-             //Means page loaded first time not re-directed from server due to any page event with any service tag in URL.
+            if (!IsPostBack)
+            //Means page loaded first time not re-directed from server due to any page event with any service tag in URL.
             {          //**Or refreshed**
 
                 ClearFormFields();
@@ -38,10 +38,8 @@ namespace WebApplication3
             }
 
             GridView1.DataBind();
-
-
-
         }
+           
         //Go Button to fetch book detail by ID
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
@@ -62,9 +60,6 @@ namespace WebApplication3
                 AddNewBook();
             }
         }
-
-
-
 
 
         //Update Book
@@ -104,12 +99,31 @@ namespace WebApplication3
 
                 /*ChatGpt Version for testing...this code worked*/
                 string filepath = "~/book_inventory/books1.png";
-                if (FileUpload1.HasFile)
+
+
+
+               
+                try
                 {
-                    string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                    FileUpload1.SaveAs(Server.MapPath("~/book_inventory/" + filename));
-                    filepath = "~/book_inventory/" + filename;
+                    if (FileUpload1.HasFile)
+                    {
+                        string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+
+                        filepath = "~/book_inventory/" + filename;
+                        FileUpload1.SaveAs(Server.MapPath("~/book_inventory/" + filename));
+
+                        
+                    }
                 }
+                catch (Exception ex)
+                {
+                    // Log the exception or print the error message to understand the issue.
+                    Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+                }
+
+
+
+
 
                 /*Below code hade error but there was suspetion to SQL Block.. 2 Week it will took to sort out with help of ChatGpt*/
                 /*Possible Error by ChatGpt.... Check if the file actually exists by verifying the value of filename. It's possible that no file is selected, and filename is empty.*/
@@ -140,20 +154,20 @@ namespace WebApplication3
                 cmd.Parameters.AddWithValue("@genre", genres);
                 cmd.Parameters.AddWithValue("@author_name", DropDownList1.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@publish_date", TextBox3.Text.Trim());
-                cmd.Parameters.AddWithValue("@book_cost", TextBox10.Text.Trim());
-                cmd.Parameters.AddWithValue("@no_of_pages", TextBox11.Text.Trim());
-                cmd.Parameters.AddWithValue("@book_description", TextBox6.Text.Trim());
-                cmd.Parameters.AddWithValue("@actual_stock", TextBox4.Text.Trim());
-                cmd.Parameters.AddWithValue("@current_stock", TextBox4.Text.Trim());
+                cmd.Parameters.AddWithValue("@book_cost", TextBox5.Text.Trim());
+                cmd.Parameters.AddWithValue("@no_of_pages", TextBox6.Text.Trim());
+                cmd.Parameters.AddWithValue("@book_description", TextBox10.Text.Trim());
+                cmd.Parameters.AddWithValue("@actual_stock", TextBox7.Text.Trim());
+                cmd.Parameters.AddWithValue("@current_stock", TextBox11.Text.Trim());
                 cmd.Parameters.AddWithValue("@book_img_link", filepath);
                 cmd.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
                 cmd.Parameters.AddWithValue("@language", DropDownList3.SelectedItem.Value);
-                cmd.Parameters.AddWithValue("@edition", TextBox9.Text.Trim());
+                cmd.Parameters.AddWithValue("@edition", TextBox4.Text.Trim());
 
                 cmd.ExecuteNonQuery();
                 con.Close();
                 GridView1.DataBind();
-                Response.Write("<script>alert('Book Added Successfully');</script>");
+                Response.Write("<script>alert('Book Added with id " +  TextBox1.Text.Trim()  + " Successfully');</script>");
             }
 
             catch (Exception ex)
@@ -454,8 +468,9 @@ namespace WebApplication3
 
                     cmd.ExecuteNonQuery();
                     con.Close();
-                    Response.Write("<script>alert('Book Deleted Successfully');</script>");
-
+                    Response.Write("<script>alert('Book with ID " + TextBox1.Text.Trim() + " Deleted Successfully');</script>");
+                    TextBox1.Text = "";
+                    ClearFormFields();
                     GridView1.DataBind();
 
                 }
@@ -558,64 +573,118 @@ namespace WebApplication3
             }
         }
 
-
-
-
-
-
     }
 }
 /* this time no move farword after sucessful compilation first practice this page throwly*/
-/*    -----------------------------------------------NOTES--------------------------------------------
+/*    
+............................................try to solve by ChatGpt, *Bard ..........................................................
+...........................................................Current......................................................
+file uplaod function have to read from utube and apply code for image size and iamge type also practicre on design and running code on new system from git and pen drive.(https://www.youtube.com/watch?v=irF6Zomjxwc)
+1.)if any genere is not selected AddNewBookFunction not working.
+{
+sol0l:    without gerene let Nonquery executed.
+Sol02:    Prompt User to Enter Genere. and recall and call 
+Sol03:    Javascript code no 
+}
+
+2.)if any file path selected code is breaking from that point.
+{
+possible reasons;
+1.) wrong format of file selected.
+2.)some error in code seqencing.
+3.)
+}
+3.)there should be any jscript code to check book id format at the time of updating or adding the book id.
+{
+sol:1 Prompt user to enter the id in specified format.
+Sol:2 genrate book id autometically.
 
 
-issue still Pending 
+4.)Problem in page load event in get book by ID function. 
+{
+genere not refreahing on executing getBookbyID Function, previous selected values remains with the new selected value aasociated of currebt book id.
+}
+.....................................................Current.......................................................
+
+1.) Current_Stock text box is missplaced with wrong textbox.
+2.)
+3.)
+
+..........................................Issue Still Pending ..........................................................
 {
 on refreshing the page value in textbox1 remains and execute the get book by id function autometically 
+
+
 }
 *
-{...**TroubleShootingDoneSuccessfully
-**Pages textbox not working when text box property was number. later changed to single line worked.
-*"TextBox5.Text = "" + current_stock;" could also be the solution of above problem
-}
 
+--------------------------------------------------------NOTES--------------------------------------------------------
 
  ***The "" + construct is a way to explicitly force the numerical expression to be treated as a string.
          When a string is combined with a non-string value using +, the non-string value is automatically converted to a string.
 The final result of the expression "" + (arithmetic expression) is a string that represents the numerical value of the arithmetic expression.**bard  https://g.co/bard/share/c4d7cc9d42ad   */
 /*Issues still need to be resolved
- 1.On deleting the book record book id remains on PAGE after deletion..
+ 1.
 ** issues still need to resolve: on refreshing the page textbox1 value remain on page and values in other textbox still remain on page when it should be clen on rfreshing or remain is also the option but logic have to clear behind the code
  */
 
 /*
- *** DropDownList3.ClearSelection();
-DropDownList3.SelectedValue = dt.Rows[0]["language"].ToString(); //Language   
-DropDownList2.SelectedValue = dt.Rows[0]["publisher_name"].ToString(); //Publisher Name
-DropDownList1.SelectedValue = dt.Rows[0]["author_name"].ToString(); //Auther Name
+  
+.............................................**TroubleShootingDoneSuccessfully......................................................
 
+{
+**Pages textbox not working when text box property was number. later changed to single line worked.
+*"TextBox5.Text = "" + current_stock;" could also be the solution of above problem
+*On deleting the book record book id remains on PAGE after deletion..(Solved by clear field function)
 
-Above code not working but suddnly start working
-*/
-/*Above code not working but suddnly start working
-                    //DropDownList3.SelectedValue = dt.Rows[0]["language"].ToString(); //language
-                    //Console.WriteLine("Genere = " + genre);
-                    //DropDownList3.ClearSelection();
-                    //DropDownList3.SelectedValue = null;
-                    //string name = dt.Rows[0]["language"].ToString();
-                    //DropDownList3.SelectedValue = name;
-                    //Response.Write("<script>alert('Language Value = " + name + "');</script>");
-                    //Response.Write("<script>alert('selected Value = " + DropDownList3.SelectedValue + "');</script>");
-                    //Response.Write("<script>alert('Language Value = " + name + "');</script>");
-                    //ListBox1.SelectedValue = dt.Rows[0]["genre"].ToString();      //Auther Name 
-                    //TextBoxAuthor.Text = dt.Rows[0]["author_name"].ToString(); //Auther Name
-                    //TextBoxPublisher.Text = dt.Rows[0]["publisher_name"].ToString(); //Publisher Name
-                    //DropDownList3.Text = dt.Rows[0]["language"].ToString();//Akber Testing
-                    //TextBox9.Text = dt.Rows[0]["issued_book"].ToString();          //Issued Book not in database.........................
-                    */
-//first error was occured when database file name was missmatch in datbase and C# page
-//Second error was on page load funtion was clearing the book id in textbox1 and i was serching error in textbox properties why it is showing error. while it was programe logic error. 
-//third error was in add new book function (mentioned in addfunction ) file uplad vlue was null so it was creating error and i am serching error in sql string.
+ 
+//first error was occured, when database file name was missmatch in datbase and C# query.
+//Second error was on page load funtion was clearing the book id in textbox1 at time of load and it was showing  error in textbox properties. while it was programe logic error. 
+//third error was in add new book function (mentioned in addfunction ) file uplad value was null so it was creating error and i am serching error in sql string.
 //fourth error text box intger value was invisible, visible on making textbox property "inline".
-
+//fifth error genre section of code producing error: some code lines were misplaced 
 //conclusion: there should be comolete map of page structure and logic in your mind for truble shooting. like complete paragraph of poetry not single line.
+//textbox numbers were incorrect in SQL Query. matched with frontend page to sql query. another option to do that is fill every input box with distinct number and match in databse.
+
+....................below File Name selction code was not working .................................
+
+ //if the below code executed program breaks form this point 
+                /* if (FileUpload1.HasFile)
+                 {
+
+                   1.)  string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                   2.)  FileUpload1.SaveAs(Server.MapPath("~/book_inventory/" + filename));
+                   3.)  filepath = "~/book_inventory/" + filename;
+                 }
+just swaped the ABOVE 2 & 3 LINE IN MASTER CODE AS 3 THEN 2 ,, IT WORKED {{UPDATEFUNCTION}} ...............
+.............................Below ChatGpt Code.code working properly IN   .................................. 
+                             string filename = "";
+                    
+
+                    if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.FileName != "")
+                    {
+                        filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                         
+                      Response.Write("<script>alert('entered File uplad(function) Successfully=' + filename );</script>");
+                        filepath = "~/book_inventory/" + filename;
+
+                    }
+                    else
+                    {
+
+                        if (filename == "" || filename == null)
+                        {
+                            filepath = global_filepath; 
+
+                        }
+                        else   
+                        {
+                            FileUpload1.SaveAs(Server.MapPath("book_inventory/" + filename));
+                           
+                        }               
+
+                    }
+
+
+
+}*/
