@@ -24,20 +24,24 @@ namespace WebApplication3
         static string global_filepath;
         static int global_actual_stock, global_current_stock, global_issued_books;
 
-        protected void Page_Load(object sender, EventArgs e)//Page Load Button 
+        protected void Page_Load(object sender, EventArgs e)//Page Load Event 
         {
-
-
+                        
             if (!IsPostBack)
             //Means page loaded first time not re-directed from server due to any page event with any service tag in URL.
             {          //**Or refreshed**
 
                 ClearFormFields();
                 fillAuthorPublisherValues();
-
             }
+              /*if (IsPostBack)
+               //Means page loaded first time not re-directed from server due to any page event with any service tag in URL.
+               {   //**Or refreshed**
 
-            GridView1.DataBind();
+                   ClearFormFields();
+                   fillAuthorPublisherValues();
+                }*/
+              GridView1.DataBind();
         }
            
         //Go Button to fetch book detail by ID
@@ -83,10 +87,11 @@ namespace WebApplication3
         /*self version with errors*/
         protected void AddNewBook()
         {
-
+            // ListBox1.ClearSelection();//for clearing the previous selected value of Genre 
 
             try
             {
+
 
                 //foreach (int i in ListBox1.GetSelectedIndices()): This loop iterates through each index of the ***(selected items) in the ListBox1 control.
                 string genres = "";
@@ -94,32 +99,89 @@ namespace WebApplication3
                 {
                     genres = genres + ListBox1.Items[i] + ",";
                 }
+
                 // genres = Adventure,Self Help,
-                genres = genres.Remove(genres.Length - 1);
+                // Remove the last comma
+                if (!string.IsNullOrEmpty(genres))
+                {
+                    genres = genres.Remove(genres.Length - 1);
+                }
+                else
+                {
+                    // Prompt the user to select at least one genre
+                    Response.Write("<script>alert('Please select at least one genre.');</script>");
+                    return; // Exit the method
+                }
+
 
                 /*ChatGpt Version for testing...this code worked*/
-                string filepath = "~/book_inventory/books1.png";
-
-
-
-               
+                string filepath = "~/Upload/books1.png";
+                
                 try
                 {
-                    if (FileUpload1.HasFile)
-                    {
-                        string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                    
+                    
 
-                        filepath = "~/book_inventory/" + filename;
-                        FileUpload1.SaveAs(Server.MapPath("~/book_inventory/" + filename));
+                        if (FileUpload1.HasFile)
+                        {//In C#, System.IO.Path is a class that provides static methods for working with file paths. It enables you to perform various operations on file and directory paths, such as combining paths, extracting file names, getting the extension of a file, and more.
 
-                        
-                    }
+                        // Check file size
+                        if (FileUpload1.PostedFile.ContentLength > 2 * 1024 * 1024) // 2MB limit
+                        {
+                            lblmessage.Text = "File size should not exceed 2MB";
+                            lblmessage.ForeColor = System.Drawing.Color.Red;
+                            return; // Exit the method
+                        }
+
+                            string fileExtension = System.IO.Path.GetExtension(FileUpload1.FileName);
+                            if (fileExtension.ToLower() != ".jpg" && fileExtension.ToLower() != ".jpeg")
+                            {
+                                lblmessage.Text = "File Not Uploaded";
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+                                lblmessage.Font.Bold = true;
+                                lblmessage.Font.Size = FontUnit.Point(24);
+                                lblmessage.BackColor = System.Drawing.Color.Yellow;
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+
+                                lblmessage.Text = "only JPEG & PNG extention files are allowed";
+                                lblmessage.ForeColor = System.Drawing.Color.Red;
+                                Response.Write("<script>alert('message');</script>");
+                            return;
+
+                            }
+
+
+                            else
+                            {
+
+                                string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+
+                                filepath = "~/Upload/" + filename;
+                                FileUpload1.SaveAs(Server.MapPath("~/Upload/" + filename));
+                                lblmessage.Text = "File Uploaded";
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+                                lblmessage.Font.Bold = true;
+                                lblmessage.Font.Size = FontUnit.Point(24);
+                                lblmessage.BackColor = System.Drawing.Color.Yellow;
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+                             //   break;
+                            }
+                        }
+
+                        else
+                        {
+                            lblmessage.Text = "Please Select a file for upload";
+                            //break;
+                        }
+                    
                 }
-                catch (Exception ex)
-                {
-                    // Log the exception or print the error message to understand the issue.
-                    Response.Write($"<script>alert('Error: {ex.Message}');</script>");
-                }
+
+
+            catch (Exception ex)
+            {
+                // Log the exception or print the error message to understand the issue.
+                Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+            }
 
 
 
@@ -235,125 +297,146 @@ namespace WebApplication3
                 try
                 {
 
-                    {
-                        // Response.Write("<script>alert('TextBox7 is empty');</script>");
-                    }
 
-
-                    int actual_stock = Convert.ToInt32(TextBox7.Text.Trim());
-
-
-                    int current_stock = Convert.ToInt32(TextBox11.Text.Trim());
-
-
-
-                    if (global_actual_stock == actual_stock)
-                    {
-                        //Response.Write("<script>alert('entered first if box Successfully');</script>");
-                    }
-                    else
-                    {
-                        if (actual_stock < global_issued_books)
-                        {
-
-                            Response.Write("<script>alert('Actual Stock value cannot be less than the Issued books');</script>");
-                            return;
-                        }
-                        else
-                        {
-                            current_stock = actual_stock - global_issued_books;
-                            TextBox11.Text = "" + current_stock;
-                        }
-                    }
-
-                    //foreach (int i in ListBox1.GetSelectedIndices()): This loop iterates through each <index> of the *******(selected items) in the ListBox1 control.
-                    //The loop starts with the first selected item (index 0 in the array) and continues until it reaches the last selected item.
-                    //ListBox1.GetSelectedIndices() returns an array of integers representing the indices of the selected items in the ListBox.
-                    /*string genres = "";
-                    foreach (int i in ListBox1.GetSelectedIndices())//i represents the index of the current selected item. if nothing is selected then code will genrate error.
+                    //foreach (int i in ListBox1.GetSelectedIndices()): This loop iterates through each index of the ***(selected items) in the ListBox1 control.
+                    string genres = "";
+                    foreach (int i in ListBox1.GetSelectedIndices())
                     {
                         genres = genres + ListBox1.Items[i] + ",";
                     }
-                    genres = genres.Remove(genres.Length - 1);
 
-                    */
-
-                    string genres = "";
-
-                    if (ListBox1.GetSelectedIndices().Length > 0)
+                    // genres = Adventure,Self Help,
+                    // Remove the last comma
+                    if (!string.IsNullOrEmpty(genres))
                     {
-                        foreach (int i in ListBox1.GetSelectedIndices())
-                        {
-                            genres = genres + ListBox1.Items[i] + ",";
-                        }
-
                         genres = genres.Remove(genres.Length - 1);
-                    }
-
-                    string filepath = "~/book_inventory/books1";
-                    //below started FileUpload Function
-
-                    string filename = "";
-                    
-
-                    if (FileUpload1.PostedFile != null && FileUpload1.PostedFile.FileName != "")
-                    {
-                        filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
-                         
-                      Response.Write("<script>alert('entered File uplad(function) Successfully=' + filename );</script>");
-                        filepath = "~/book_inventory/" + filename;
-
                     }
                     else
                     {
+                        // Prompt the user to select at least one genre
+                        Response.Write("<script>alert('Please select at least one genre.');</script>");
+                        return; // Exit the method
+                    }
 
-                        if (filename == "" || filename == null)
-                        {
-                            filepath = global_filepath; 
 
+                    /*ChatGpt Version for testing...this code worked*/
+                    string filepath = "~/Upload/books1.png";
+
+                    try
+                    {
+
+
+
+                        if (FileUpload1.HasFile)
+                        {//In C#, System.IO.Path is a class that provides static methods for working with file paths. It enables you to perform various operations on file and directory paths, such as combining paths, extracting file names, getting the extension of a file, and more.
+
+                            // Check file size
+                            if (FileUpload1.PostedFile.ContentLength > 2 * 1024 * 1024) // 2MB limit
+                            {
+                                lblmessage.Text = "File size should not exceed 2MB";
+                                lblmessage.ForeColor = System.Drawing.Color.Red;
+                                return; // Exit the method
+                            }
+
+                            string fileExtension = System.IO.Path.GetExtension(FileUpload1.FileName);
+                            if (fileExtension.ToLower() != ".jpg" && fileExtension.ToLower() != ".jpeg")
+                            {
+                                lblmessage.Text = "File Not Uploaded";
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+                                lblmessage.Font.Bold = true;
+                                lblmessage.Font.Size = FontUnit.Point(24);
+                                lblmessage.BackColor = System.Drawing.Color.Yellow;
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+
+                                lblmessage.Text = "only JPEG & PNG extention files are allowed";
+                                lblmessage.ForeColor = System.Drawing.Color.Red;
+                                Response.Write("<script>alert('message');</script>");
+                                return;
+
+                            }
+
+
+                            else
+                            {
+
+                                string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+
+                                filepath = "~/Upload/" + filename;
+                                FileUpload1.SaveAs(Server.MapPath("~/Upload/" + filename));
+                                lblmessage.Text = "File Uploaded";
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+                                lblmessage.Font.Bold = true;
+                                lblmessage.Font.Size = FontUnit.Point(24);
+                                lblmessage.BackColor = System.Drawing.Color.Yellow;
+                                lblmessage.ForeColor = System.Drawing.Color.Green;
+                                //   break;
+                            }
                         }
-                        else   
+
+                        else
                         {
-                            FileUpload1.SaveAs(Server.MapPath("book_inventory/" + filename));
-                           
+                            lblmessage.Text = "Please Select a file for upload";
+                            //break;
                         }
-                                                                    
-                               
-                  
 
                     }
 
-                   
-                    
+
+                    catch (Exception ex)
+                    {
+                        // Log the exception or print the error message to understand the issue.
+                        Response.Write($"<script>alert('Error: {ex.Message}');</script>");
+                    }
+
+
+
+
+
+                    /*Below code hade error but there was suspetion to SQL Block.. 2 Week it will took to sort out with help of ChatGpt*/
+                    /*Possible Error by ChatGpt.... Check if the file actually exists by verifying the value of filename. It's possible that no file is selected, and filename is empty.*/
+
+                    /*
+                    string filepath = "~/book_inventory/books1.png";
+                    string filename = Path.GetFileName(FileUpload1.PostedFile.FileName);
+                    FileUpload1.SaveAs(Server.MapPath("book_inventory/" + filename));
+                    filepath = "~/book_inventory/" + filename;
+                   */
+
                     SqlConnection con = new SqlConnection(strcon);
+
+
                     if (con.State == ConnectionState.Closed)
                     {
                         con.Open();
                     }
-                    SqlCommand cmd = new SqlCommand("UPDATE book_master_tbl set book_name=@book_name, genre=@genre, author_name=@author_name, publisher_name=@publisher_name, publish_date=@publish_date, language=@language, edition=@edition, book_cost=@book_cost, no_of_pages=@no_of_pages, book_description=@book_description, actual_stock=@actual_stock, current_stock=@current_stock, book_img_link=@book_img_link where book_id='" + TextBox1.Text.Trim() + "'", con);
 
+
+
+                    SqlCommand cmd = new SqlCommand("INSERT INTO book_master_tbl (book_id, book_name, genre, author_name, publish_date, book_cost, no_of_pages, book_description, actual_stock, current_stock, book_img_link, publisher_name, language, edition) VALUES (@book_id, @book_name, @genre, @author_name, @publish_date, @book_cost, @no_of_pages, @book_description, @actual_stock, @current_stock, @book_img_link, @publisher_name, @language, @edition)", con);
+
+
+
+                    cmd.Parameters.AddWithValue("@book_id", TextBox1.Text.Trim());
                     cmd.Parameters.AddWithValue("@book_name", TextBox2.Text.Trim());
                     cmd.Parameters.AddWithValue("@genre", genres);
                     cmd.Parameters.AddWithValue("@author_name", DropDownList1.SelectedItem.Value);
-                    cmd.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
                     cmd.Parameters.AddWithValue("@publish_date", TextBox3.Text.Trim());
-                    cmd.Parameters.AddWithValue("@language", DropDownList3.SelectedItem.Value);
-                    cmd.Parameters.AddWithValue("@edition", TextBox9.Text.Trim());
-                    cmd.Parameters.AddWithValue("@book_cost", TextBox10.Text.Trim());
-                    cmd.Parameters.AddWithValue("@no_of_pages", TextBox11.Text.Trim());
-                    cmd.Parameters.AddWithValue("@book_description", TextBox6.Text.Trim());
-                    cmd.Parameters.AddWithValue("@actual_stock", actual_stock.ToString());
-                    cmd.Parameters.AddWithValue("@current_stock", current_stock.ToString());
+                    cmd.Parameters.AddWithValue("@book_cost", TextBox5.Text.Trim());
+                    cmd.Parameters.AddWithValue("@no_of_pages", TextBox6.Text.Trim());
+                    cmd.Parameters.AddWithValue("@book_description", TextBox10.Text.Trim());
+                    cmd.Parameters.AddWithValue("@actual_stock", TextBox7.Text.Trim());
+                    cmd.Parameters.AddWithValue("@current_stock", TextBox11.Text.Trim());
                     cmd.Parameters.AddWithValue("@book_img_link", filepath);
-
+                    cmd.Parameters.AddWithValue("@publisher_name", DropDownList2.SelectedItem.Value);
+                    cmd.Parameters.AddWithValue("@language", DropDownList3.SelectedItem.Value);
+                    cmd.Parameters.AddWithValue("@edition", TextBox4.Text.Trim());
 
                     cmd.ExecuteNonQuery();
                     con.Close();
                     GridView1.DataBind();
-                    Response.Write("<script>alert('Book Updated Successfully');</script>");
-
-
+                    Response.Write("<script>alert('Book Added with id " + TextBox1.Text.Trim() + " Successfully');</script>");
                 }
+
                 catch (Exception ex)
                 {
                     Response.Write("<script>alert('" + ex.Message + "');</script>");
@@ -367,6 +450,7 @@ namespace WebApplication3
 
         void GetBookbyID()
         {
+            ClearFormFields();
             try
             {
                 SqlConnection con = new SqlConnection(strcon);
@@ -538,7 +622,15 @@ namespace WebApplication3
             TextBox11.Text = "";              //Current Stock........ok
             TextBox10.Text = "";             //Book Discription....ok
             TextBox2.Text = "";             //Book Name
-            TextBox3.Text = " ";           //Publish 
+            TextBox3.Text = "";           //Publish 
+            TextBox9.Text = "";           //Remaining stock
+            lblmessage.Text = string.Empty;
+            lblmessage.Font.Bold = false;
+            lblmessage.Font.Size = FontUnit.Empty;
+            lblmessage.BackColor = System.Drawing.Color.Empty;
+            lblmessage.ForeColor = System.Drawing.Color.Empty;
+
+            //TextBox1.Text = "";      //it will clear the text box value on page load which shows error
         }
 
         void fillAuthorPublisherValues()
@@ -577,22 +669,31 @@ namespace WebApplication3
 }
 /* this time no move farword after sucessful compilation first practice this page throwly*/
 /*    
-............................................try to solve by ChatGpt, *Bard ..........................................................
-...........................................................Current......................................................
-file uplaod function have to read from utube and apply code for image size and iamge type also practicre on design and running code on new system from git and pen drive.(https://www.youtube.com/watch?v=irF6Zomjxwc)
+................................try to solve by ChatGpt, *Bard ...............................................
+...........................................................Current............................................
+file uplaod function have to read from youtube and apply code for image size and image type also practicre on design and running code on new system from git and pen drive.(https://www.youtube.com/watch?v=irF6Zomjxwc)
+
+#file uploading is over writing existing file. means if a diffrent user uplads a file with same name it will overwrite the existing file with same name
+
+#if extention is not matching it is showing error on lalbel but not halting executon of progrrame.
+
+
+
 1.)if any genere is not selected AddNewBookFunction not working.
 {
-sol0l:    without gerene let Nonquery executed.
-Sol02:    Prompt User to Enter Genere. and recall and call 
-Sol03:    Javascript code no 
+sol0l:    Without gerene let Nonquery executed.
+Sol02:    Prompt User to Enter Genere. and recall and call.
+Sol03:    Javascript code no.
+Answer:   Solved by ChatGPT Code.(if (!string.IsNullOrEmpty(genres)))
 }
 
-2.)if any file path selected code is breaking from that point.
+2.)If any file path selected code is breaking from that point.
 {
 possible reasons;
 1.) wrong format of file selected.
-2.)some error in code seqencing.
-3.)
+2.) some error in code seqencing.
+Answer:Solved By ChatGpt by just changing the sequence of code.
+
 }
 3.)there should be any jscript code to check book id format at the time of updating or adding the book id.
 {
@@ -602,7 +703,7 @@ Sol:2 genrate book id autometically.
 
 4.)Problem in page load event in get book by ID function. 
 {
-genere not refreahing on executing getBookbyID Function, previous selected values remains with the new selected value aasociated of currebt book id.
+genere not refreahing on executing getBookbyID Function second time, means previous selected values remains with the new selected value aasociated with genere current book id.
 }
 .....................................................Current.......................................................
 

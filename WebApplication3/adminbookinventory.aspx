@@ -36,9 +36,17 @@
                         <div class="row">
                             <div class="col">
 
+                                
+
                                 <asp:FileUpload class="form-control" ID="FileUpload1" runat="server" />
 
                             </div>
+                            <div class="col">
+                                <asp:Label ID="lblmessage" runat="server" Text="Label for File Status" ClientIDMode="AutoID"></asp:Label>
+                                </div>
+
+
+
                         </div>
 
 
