@@ -705,15 +705,15 @@ Sol:2 genrate book id autometically.
 {
 genere not refreahing on executing getBookbyID Function second time, means previous selected values remains with the new selected value aasociated with genere current book id.
 }
-.....................................................Current.......................................................
+.....................................................Current..................................................
 
 1.) Current_Stock text box is missplaced with wrong textbox.
 2.)
 3.)
 
-..........................................Issue Still Pending ..........................................................
+..................................Issue StillPending ..................................................
 {
-on refreshing the page value in textbox1 remains and execute the get book by id function autometically 
+on refreshing the page value in textbox1 remains and execute the get book by id function autometically.
 
 
 }
@@ -741,7 +741,7 @@ The final result of the expression "" + (arithmetic expression) is a string that
  
 //first error was occured, when database file name was missmatch in datbase and C# query.
 //Second error was on page load funtion was clearing the book id in textbox1 at time of load and it was showing  error in textbox properties. while it was programe logic error. 
-//third error was in add new book function (mentioned in addfunction ) file uplad value was null so it was creating error and i am serching error in sql string.
+//third error was in add new book function (mentioned in addfunction ) file upload value was null so it was creating error and i am serching error in sql string.
 //fourth error text box intger value was invisible, visible on making textbox property "inline".
 //fifth error genre section of code producing error: some code lines were misplaced 
 //conclusion: there should be comolete map of page structure and logic in your mind for truble shooting. like complete paragraph of poetry not single line.

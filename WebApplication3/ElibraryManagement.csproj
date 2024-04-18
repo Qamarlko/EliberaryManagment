@@ -2301,6 +2301,7 @@
     <Content Include="imgs\writer.png" />
     <Content Include="userlogin.aspx" />
     <Content Include="usersignup.aspx" />
+    <Content Include="viewbooks.aspx" />
     <Content Include="Web.config" />
     <Content Include="About.aspx" />
   </ItemGroup>
@@ -2385,6 +2386,13 @@
     </Compile>
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="viewbooks.aspx.cs">
+      <DependentUpon>viewbooks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="viewbooks.aspx.designer.cs">
+      <DependentUpon>viewbooks.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
