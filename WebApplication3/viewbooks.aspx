@@ -38,13 +38,13 @@
                                                 <ItemStyle Font-Bold="True" />
                                             </asp:BoundField>
                                             <asp:TemplateField>
-                                                <ItemTemplate>
+                                            <ItemTemplate>
                                                     <div class="container-fluid">
                                                         <div class="row">
                                                             <div class="col-lg-10">
                                                                 <div class="row">
                                                                     <div class="col-12">
-                                                                        <asp:Label ID="Label1" runat="server" Text='<%# Eval("book_name") %>' Font-Bold="True" Font-Size="X-Large"></asp:Label>
+                                                                        <asp:Label ID="Label1" runat="server" Text='<%# Eval("book_name") %>' Font-Bold="True" Font-Size="X-Large"></asp:Label> 
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">
@@ -106,10 +106,11 @@
             <center>
                 <a href="home.aspx"><< Back to Home</a><span class="clearfix"></span>
                 <br />
-                <center>
+            <center>
         </div>
     </div>
-
+    
 </asp:Content>
+
 
 

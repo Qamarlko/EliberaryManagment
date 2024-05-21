@@ -584,8 +584,6 @@ namespace WebApplication3
                 }
 
                 SqlCommand cmd = new SqlCommand("SELECT * from book_master_tbl where book_id='" + TextBox1.Text.Trim() + "';", con);
-
-
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -610,7 +608,7 @@ namespace WebApplication3
         private void ClearFormFields()
         {
 
-            DropDownList1.ClearSelection();
+          //  DropDownList1.ClearSelection();
             DropDownList2.ClearSelection();
             DropDownList3.ClearSelection();
             ListBox1.Items[0].Selected = true;
@@ -622,7 +620,7 @@ namespace WebApplication3
             TextBox11.Text = "";              //Current Stock........ok
             TextBox10.Text = "";             //Book Discription....ok
             TextBox2.Text = "";             //Book Name
-            TextBox3.Text = "";           //Publish 
+            TextBox3.Text = "";            //Publish 
             TextBox9.Text = "";           //Remaining stock
             lblmessage.Text = string.Empty;
             lblmessage.Font.Bold = false;
